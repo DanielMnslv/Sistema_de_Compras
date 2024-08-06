@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+<!---->
+{% block title %}Actualizar Datos del Empleado{% endblock %}
+<!---->
+{%block content %}
+{% load static %}
+
+<div class="row justify-content-center">
+  <div class="col-md-12 mb-2">
+    <h1 class="text-center text-uppercase">
+      <a style="float: left" href="{% url 'inicio' %}">
+        <span><i class="bi bi-arrow-left-circle"></i></span>
+      </a>
+      Datos de la Solicitud
+      <hr />
+    </h1>
+  </div>
+</div>
+
+<div class="row justify-content-md-center">
+  <form
+    name="form_empleado"
+    method="POST"
+    action="{% url 'actualizar_empleado' empleado.id %}"
+    class="row justify-content-md-center g-3"
+    enctype="multipart/form-data">
+
+    {% csrf_token %}
+    <div class="col-md-5">
+      <label for="producto_servicio" class="form-label">
+        Nombre del Producto o Servicio
+      </label>
+      <input
+        type="text"
+        name="producto_servicio"
+        value="{{ empleado.producto_servicio }}"
+        class="form-control"
+        required />
+    </div>
+    <div class="col-md-5">
+      <label for="descripcion" class="form-label">
+        Descripcion del Producto o  Servicio
+      </label>
+      <input
+        type="text"
+        name="descripcion"
+        value="{{ empleado.descripcion }}"
+        class="form-control"
+        required />
+    </div>
+    <div class="col-md-5">
+  <label for="destino" class="form-label">Destino</label>
+  <select name="destino" class="form-control" required>
+    <option value="ADMINISTRACIÓN" {% if empleado.destino == "ADMINISTRACIÓN" %}selected{% endif %}>ADMINISTRACIÓN</option>
+    <option value="PRODUCCION" {% if empleado.destino == "PRODUCCION" %}selected{% endif %}>PRODUCCION</option>
+    <option value="ALEVINERA" {% if empleado.destino == "ALEVINERA" %}selected{% endif %}>ALEVINERA</option>
+    <option value="ECOPEZ" {% if empleado.destino == "ECOPEZ" %}selected{% endif %}>ECOPEZ</option>
+    <option value="FERRY" {% if empleado.destino == "FERRY" %}selected{% endif %}>FERRY</option>
+    <option value="CARRO VNS228" {% if empleado.destino == "CARRO VNS228" %}selected{% endif %}>CARRO VNS228</option>
+    <option value="CARRO WGY" {% if empleado.destino == "CARRO WGY" %}selected{% endif %}>CARRO WGY</option>
+    <option value="CARRO THS 473" {% if empleado.destino == "CARRO THS 473" %}selected{% endif %}>CARRO THS 473</option>
+    <option value="CARRO PESCA SRP 254" {% if empleado.destino == "CARRO PESCA SRP 254" %}selected{% endif %}>CARRO PESCA SRP 254</option>
+    <option value="TERMOKIN GQZ 727" {% if empleado.destino == "TERMOKIN GQZ 727" %}selected{% endif %}>TERMOKIN GQZ 727</option>
+    <option value="TERMOKIN GRK 030" {% if empleado.destino == "TERMOKIN GRK 030" %}selected{% endif %}>TERMOKIN GRK 030</option>
+    <option value="THERMO KING THS 592" {% if empleado.destino == "THERMO KING THS 592" %}selected{% endif %}>THERMO KING THS 592</option>
+    <option value="UNIDAD COMERCIALIZACION" {% if empleado.destino == "UNIDAD COMERCIALIZACION" %}selected{% endif %}>UNIDAD COMERCIALIZACION</option>
+  </select>
+</div>
+
+    <div class="col-md-5">
+      <label for="cantidad" class="form-label"> Cantidad </label>
+      <select name="cantidad" class="form-select" required>
+            {% for cantidad, cantidad_text in opciones_cantidad %}
+                <option value="{{ cantidad }}" {% if empleado.cantidad == cantidad %}selected{% endif %}>
+                    {{ cantidad_text }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+<div class="col-md-5">
+  <label for="tipo">Tipo de Solicitud</label>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="tipo"
+      id="Producto"
+      value="Producto"
+      {% if empleado.tipo == "Producto" %}checked{% endif %}/>
+    <label class="form-check-label" for="Producto">Producto</label>
+  </div>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="tipo"
+      value="Servicio"
+      id="Servicio"
+      {% if empleado.tipo == "Servicio" %}checked{% endif %}/>
+    <label class="form-check-label" for="Servicio">Servicio</label>
+  </div>
+</div>
+
+    <div class="col-md-5">
+      <label for="observaciones" class="form-label">
+        Observaciones/Especificacion
+      </label>
+      <input
+        type="text"
+        name="observaciones"
+        value="{{ empleado.observaciones }}"
+        class="form-control"
+        required />
+    </div>
+    
+    <div class="col-md-5">
+      <label for="solicitado_por" class="form-label">
+        Solicitado Por:
+      </label>
+      <input
+        type="text"
+        name="solicitado_por"
+        value="{{ empleado.solicitado_por }}"
+        class="form-control"
+        required />
+    </div>
+    
+        <div class="col-md-5">
+          <label for="aprobado_compra" class="form-label">
+             Aprobado Para Compra:
+          </label>
+          <input
+            type="text"
+            name="aprobado_compra"
+            value="{{ empleado.aprobado_compra }}"
+            class="form-control"
+            required />
+        </div>
+    <div class="col-md-5">
+      <label for="" class="form-label"> Cargar foto del Empleado </label>
+      <input
+        type="file"
+        name="foto_producto"
+        class="form-control form-control-sm"
+         />
+    </div>
+    <div class="col-md-5">
+        <label for="" class="form-label"> Foto actual del Producto/Servicio </label>
+        {% if empleado.foto_producto %}
+          <!---->
+          {% if empleado.es_extension_valida %}
+          <img
+            class="foto_producto"
+            src="{{ empleado.foto_producto.url }}"
+            alt="Foto de {{ empleado.producto_servicio }}"
+            width="50" />
+          {% else %}
+          <img
+            class="foto_producto"
+            src="{% static 'imgs/empleado_defaul.jpg'%}"
+            alt="Sin foto"
+            width="50" />
+          {% endif %} {% endif %}
+    </div>
+
+    <div class="d-grid gap-2 col-8 mx-auto mt-5">
+      <button class="btn btn-primary" type="submit">
+        Actualizar Datos de la Solicitud
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends '../base.html' %}
+<!---->
+{% block title %}Detalle de Solicitudes{% endblock %}
+<!---->
+{% load static %}
+<!---->
+{% block content %}
+
+<div class="row justify-content-md-center">
+  <a
+    title="volver"
+    style="float: left; font-size: 25px"
+    href="{% url 'listar_empleados' %}">
+    <span><i class="bi bi-arrow-left-circle"></i></span>
+  </a>
+  <div class="col-md-5 mb-2">
+    <div class="card shadow">
+      {% load static %} {% if empleado.foto_producto %}
+      <!---->
+      {% if empleado.es_extension_valida %}
+      <img
+        class="foto_producto"
+        src="{{ empleado.foto_producto.url }}"
+        alt="Foto de {{ empleado.producto_servicio }}"
+        width="150" />
+      {% else %}
+      <img
+        class="foto_producto"
+        src="{% static 'imgs/empleado_defaul.jpg'%}"
+        alt="Sin foto"
+        width="150" />
+      {% endif %} {% endif %}
+
+      <div class="card-body">
+        <p class="card-title">
+          <strong>Producto o Servicio:</strong> {{ empleado.producto_servicio }}
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong> Descripcion del Producto o  Servicio </strong>
+          {{ empleado.descripcion }}
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong>Cantidad</strong> {{ empleado.cantidad }} 
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong> Tipo de Solicitud</strong> {{ empleado.tipo }}
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong>Destino</strong> {{ empleado.destino }}
+        </p>
+        <p class="card-text buttom mb-3">
+          <strong> Observaciones/Especificacion</strong> {{ empleado.observaciones }}
+        </p>
+                <p class="card-text buttom mb-3">
+                  <strong> Fecha de Solicitud</strong> {{ empleado.created_at|date:"M d, Y" }}
+                </p>
+        <p class="card-text"></p>
+
+        <hr />
+
+        <a class="mt-5" href="{% url 'listar_empleados' %}">
+          <i class="bi bi-arrow-left-circle"> Volver</i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+<!---->
+{% block title %}Registrar Solicitud De Productos o Servicios {% endblock %}
+<!---->
+{%block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-12 mb-2">
+    <h1 class="text-center text-uppercase">
+      Solicitud De Productos o Servicios
+      <a
+        style="color: #14ad47; float: right; padding: 0px 10px 0px 0px"
+        href="{% url 'view_form_carga_masiva' %}">
+        <i class="bi bi-person-fill-up"></i>
+      </a>
+      <hr />
+    </h1>
+  </div>
+</div>
+
+<div class="row justify-content-md-center">
+  <form
+    name="form_empleado"
+    method="POST"
+    action="{% url 'registrar_empleado' %}"
+    class="row justify-content-md-center g-3"
+    enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="col-md-5">
+      <label for="producto_servicio" class="form-label">
+        Nombre del Producto o Servicio
+      </label>
+      <input type="text" name="producto_servicio" class="form-control" required />
+    </div>
+    <div class="col-md-5">
+      <label for="descripcion" class="form-label">
+        Descripcion del Producto o  Servicio
+      </label>
+      <input
+        type="text"
+        name="descripcion"
+        class="form-control"
+        required />
+    </div>
+        <div class="col-md-5">
+          <label for="cantidad" class="form-label"> Cantidad </label>
+          <select name="cantidad" class="form-select" required>
+            {% for cantidad, cantidad_text in opciones_cantidad %}
+            <option value="{{ cantidad }}">{{ cantidad_text }}</option>
+            {% endfor %}
+          </select>
+        </div>
+    <div class="col-md-5">
+  <label for="destino" class="form-label">Destino</label>
+  <select name="destino" class="form-control" required>
+    <option value="ADMINISTRACIÓN">ADMINISTRACIÓN</option>
+    <option value="PRODUCCION">PRODUCCION</option>
+    <option value="ALEVINERA">ALEVINERA</option>
+    <option value="ECOPEZ">ECOPEZ</option>
+    <option value="FERRY">FERRY</option>
+    <option value="CARRO VNS228">CARRO VNS228</option>
+    <option value="CARRO WGY">CARRO WGY</option>
+    <option value="CARRO THS 473">CARRO THS 473</option>
+    <option value="CARRO PESCA SRP 254">CARRO PESCA SRP 254</option>
+    <option value="TERMOKIN GQZ 727">TERMOKIN GQZ 727</option>
+    <option value="TERMOKIN GRK 030">TERMOKIN GRK 030</option>
+    <option value="THERMO KING THS 592">THERMO KING THS 592</option>
+    <option value="UNIDAD COMERCIALIZACION">UNIDAD COMERCIALIZACION</option>
+  </select>
+</div>
+    <div class="col-md-5">
+      <label for="tipo">Tipo de Solicitud</label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="tipo"
+          id="Producto"
+          value="Producto"
+          checked />
+        <label class="form-check-label" for="Masculino"> Producto </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="tipo"
+          value="Servicio"
+          id="Servicio" />
+        <label class="form-check-label" for="Femenino"> Servicio </label>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <label for="observaciones" class="form-label">
+        Observaciones/Especificacion
+      </label>
+      <input
+        type="text"
+        name="observaciones"
+        class="form-control"
+        required />
+    </div>
+        <div class="col-md-5">
+          <label for="solicitado_por" class="form-label">
+            Solicitado Por:
+          </label>
+          <input type="text" name="solicitado_por" class="form-control" required />
+        </div>
+         <div class="col-md-5">
+           <label for="aprobado_compra" class="form-label">
+             Aprobado Para Compra:
+           </label>
+           <input type="text" name="aprobado_compra" class="form-control" required />
+         </div>     
+
+    <div class="col-md-5">
+      <label for="" class="form-label"> Cargar foto del Producto o Servicio </label>
+      <input
+        type="file"
+        name="foto_producto"
+        class="form-control form-control-sm"
+        required />
+    </div>
+    <div class="col-md-5"></div>
+
+    <div class="d-grid gap-2 col-8 mx-auto mt-5">
+      <button class="btn btn-primary" type="submit">
+        Registrar Solicitud
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
